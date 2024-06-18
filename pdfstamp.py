@@ -1,7 +1,6 @@
 "Code Taken from Rena Redux project"
 
 import io
-import os
 import re
 import sys
 import pathlib
@@ -11,14 +10,7 @@ from pypdf import PdfWriter, PdfReader
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
-output_dir = os.getcwd()
-droppedfile = sys.argv[1]
-file_name = pathlib.Path(droppedfile).stem
-
 pattern = "[0-9]+"
-number = re.findall(pattern, file_name)
-
-ticket_number = "".join(map(str, number))
 
 #sleep(10)
 
@@ -43,4 +35,12 @@ def stamper(pdf_path, ticket_number):
     output.write(output_stream)
     output_stream.close()
 
-stamper(droppedfile,ticket_number)
+
+for x in range(1, len(sys.argv)):
+    droppedfile = sys.argv[x]
+    file_name = pathlib.Path(droppedfile).stem
+    
+    numbers = re.findall(pattern, file_name)
+    ticket_number = "".join(map(str, numbers))
+    
+    stamper(droppedfile,ticket_number)
